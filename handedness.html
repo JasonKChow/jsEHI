@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Edinburgh Handedness Inventory</title>
+  <script src="./jsPsych/jspsych.js"></script>
+  <script src="./jsPsych/plugins/jspsych-survey-likert.js"></script>
+  <link href="./jsPsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+</head>
+<body></body>
+<script>
+// Start timeline
+var timeline = [];
+
+// Likert scale labels
+var scale = [
+  'Only Left',
+  'Prefer Left',
+  'No Preference',
+  'Prefer Right',
+  'Only Right'];
+
+// Likert prompts
+var questions = [
+  'Writing',
+  'Drawing',
+  'Throwing',
+  'Scissors',
+  'Toothebrush',
+  'Knife (without fork)',
+  'Spoon',
+  'Broom (upper hand)',
+  'Striking Match (match)',
+  'Opening box (lid)'
+];
+
+// Create Likert scale objects
+var likert = [];
+for (var i = 0; i < questions.length; i++) {
+  likert.push({
+    prompt: questions[i],
+    labels: scale,
+    required: true})
+}
+
+// Likert page
+var likert_page = {
+    type: 'survey-likert',
+    questions: likert,
+};
+
+// Add Likert page to timeline
+timeline.push({
+  timeline: [likert_page],
+  button_label: 'Confirm'
+});
+
+// Show timeline
+jsPsych.init({
+  timeline: timeline
+});
+
+</script>
