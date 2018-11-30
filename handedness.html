@@ -4,6 +4,7 @@
   <title>Edinburgh Handedness Inventory</title>
   <script src="./jsPsych/jspsych.js"></script>
   <script src="./jsPsych/plugins/jspsych-survey-likert.js"></script>
+  <script src="./jsPsych/plugins/jspsych-html-keyboard-response.js"></script>
   <link href="./jsPsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
 </head>
 <body></body>
@@ -38,8 +39,7 @@ var likert = [];
 for (var i = 0; i < questions.length; i++) {
   likert.push({
     prompt: questions[i],
-    labels: scale,
-    required: true})
+    labels: scale})
 }
 
 // Likert page
@@ -53,6 +53,34 @@ timeline.push({
   timeline: [likert_page],
   button_label: 'Confirm'
 });
+
+// Score page
+var scorePage = {
+  type: 'html-keyboard-response',
+  stimulus: function() {
+    // Get data from survey
+    data = jsPsych.data.getLastTrialData().select('responses').values[0];
+    data = Object.values(JSON.parse(data));
+
+    var total = 0;
+    var dir = 0;
+    for (var i = 0; i < data.length; i++) {
+      if (data[i] !== '') {
+        if (data[i] == 2) {
+          total = total + 2;
+        } else {
+          total = total + Math.abs(data[i] - 2)
+          dir = dir + data[i] - 2;
+        }
+      }
+    }
+
+    var LQ = (dir / total) * 100;
+    return ['LQ: ' + LQ.toString()]
+  },
+  choices: jsPsych.NO_KEYS
+}
+timeline.push({timeline: [scorePage]})
 
 // Show timeline
 jsPsych.init({
