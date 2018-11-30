@@ -46,6 +46,12 @@ for (var i = 0; i < questions.length; i++) {
 var likert_page = {
     type: 'survey-likert',
     questions: likert,
+    preamble: ['Please indicate your preferences in the use of hands in the ' +
+      'following activities.</br></br>Some of the activities require both ' +
+      'hands. In these cases the part of the task, or object, for which hand ' +
+      'preference is wanted is indicated in brackets.</br></br>Please try to ' +
+      'answer all the questions, and only leave a blank if you have no ' +
+      'experience at all of the object or task.']
 };
 
 // Add Likert page to timeline
